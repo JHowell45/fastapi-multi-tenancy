@@ -4,16 +4,21 @@ from typing import TYPE_CHECKING
 from sqlalchemy.sql import func
 from sqlmodel import DateTime, Field, Relationship, SQLModel
 
+from .traits.tenants import TenantMixin
+
 if TYPE_CHECKING:
     from .gigs import Gig
 
 
-class Band(SQLModel, table=True):
+class BandBase(SQLModel):
+    name: str = Field(unique=True)
+    description: str
+
+
+class Band(TenantMixin, BandBase, table=True):
     __tablename__ = "bands"
 
     id: int | None = Field(default=None, primary_key=True)
-    name: str = Field(unique=True)
-    description: str
     started_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
         sa_type=DateTime,
