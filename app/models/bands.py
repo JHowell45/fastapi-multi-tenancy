@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 from sqlalchemy.sql import func
 from sqlmodel import DateTime, Field, Relationship, SQLModel
 
+from .traits.core import DateTimeMixin
 from .traits.tenants import TenantMixin
 
 if TYPE_CHECKING:
@@ -15,7 +16,7 @@ class BandBase(SQLModel):
     description: str
 
 
-class Band(TenantMixin, BandBase, table=True):
+class Band(DateTimeMixin, TenantMixin, BandBase, table=True):
     __tablename__ = "bands"
 
     id: int | None = Field(default=None, primary_key=True)
@@ -27,3 +28,14 @@ class Band(TenantMixin, BandBase, table=True):
     )
 
     gigs: list[Gig] = Relationship(back_populates="primary_band")
+    gigs: list[Gig] = Relationship(back_populates="primary_band")
+
+
+class BandPublic(BandBase):
+    id: int
+
+    gigs: list[Gig]
+
+    started_at: datetime
+    created_at: datetime
+    updated_at: datetime

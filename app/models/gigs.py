@@ -14,6 +14,4 @@ class Gig(TenantMixin, table=True):
     id: int | None = Field(default=None, primary_key=True)
 
     primary_band_id: int = Field(foreign_key="bands.id")
-    primary_band: list[Band] = Relationship(back_populates="gigs")
-    primary_band_id: int = Field(foreign_key="bands.id")
-    primary_band: list[Band] = Relationship(back_populates="gigs")
+    primary_band: Band = Relationship(back_populates="gigs")
