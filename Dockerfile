@@ -43,4 +43,4 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 EXPOSE 80
 
-CMD ["bash", "/app/scripts/start.sh"]
+CMD ["python", "/app/main.py"]
