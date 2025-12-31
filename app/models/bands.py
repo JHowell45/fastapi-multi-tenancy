@@ -30,7 +30,7 @@ class Band(DateTimeMixin, TenantMixin, BandBase, table=True):
 
     headline_gigs: list[Gig] = Relationship(back_populates="primary_band")
     support_gigs: list[Gig] = Relationship(
-        back_populates="support_gigs", link_model=BandSupportGigLink
+        back_populates="support_bands", link_model=BandSupportGigLink
     )
 
 
