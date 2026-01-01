@@ -19,7 +19,7 @@ def read_bands(
     return session.exec(select(Band).offset(params.offset).limit(params.limit)).all()
 
 
-@router.get("/{band_id}")
+@router.get("/{band_id}", response_model=BandPublic)
 def get_band_by_id(band_id: int, session: SessionDep) -> Band:
     if band := session.get(Band, band_id):
         return band
@@ -28,7 +28,7 @@ def get_band_by_id(band_id: int, session: SessionDep) -> Band:
     )
 
 
-@router.get("/{band_name}")
+@router.get("/{band_name}", response_model=BandPublic)
 def get_band_by_name(band_name: str, session: SessionDep) -> Band:
     if band := session.exec(select(Band).where(Band.name == band_name)).first():
         return band
