@@ -20,6 +20,3 @@ class Gig(TenantMixin, table=True):
     support_bands: list[Band] = Relationship(
         back_populates="support_gigs", link_model=BandSupportGigLink
     )
-    support_bands: list[Band] = Relationship(
-        back_populates="support_gigs", link_model=BandSupportGigLink
-    )

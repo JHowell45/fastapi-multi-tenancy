@@ -28,16 +28,29 @@ class Band(DateTimeMixin, TenantMixin, BandBase, table=True):
         nullable=False,
     )
 
-    headline_gigs: list[Gig] = Relationship(back_populates="primary_band")
-    support_gigs: list[Gig] = Relationship(
+    headline_gigs: list["Gig"] = Relationship(back_populates="primary_band")
+    support_gigs: list["Gig"] = Relationship(
         back_populates="support_bands", link_model=BandSupportGigLink
     )
+
+
+class BandNoGigPublic(BandBase):
+    id: int
+    started_at: datetime
+    created_at: datetime
+    updated_at: datetime
+
+
+class BandGigPublic(SQLModel):
+    id: int
+    primary_band: BandNoGigPublic
+    support_bands: list[BandNoGigPublic]
 
 
 class BandPublic(BandBase):
     id: int
 
-    gigs: list[Gig]
+    gigs: list[BandGigPublic]
 
     started_at: datetime
     created_at: datetime

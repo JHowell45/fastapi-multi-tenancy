@@ -1,8 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
 
-app = FastAPI()
+from app.routers import router
 
+app = FastAPI(title="FastAPI Multi Tenancy")
+app.include_router(router)
 
 if __name__ == "__main__":
     app_name: str = "main:app"

@@ -31,7 +31,6 @@ ENV PYTHONPATH=/app
 
 COPY ./pyproject.toml ./uv.lock /app/
 
-COPY ./scripts /app/scripts
 RUN mkdir /logs
 
 COPY ./app /app/app

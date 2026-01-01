@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     DB_USER: str
     DB_PASSWORD: str
     DB_NAME: str
-    DB_ENABLE_SSL: bool
+    DB_ENABLE_SSL: bool = True
     DB_LOG_QUERIES: bool = False
 
     model_config = SettingsConfigDict(
