@@ -9,6 +9,7 @@ services:
       - .env
     ports:
       - "80:80"
+    user: ${DOCKER_CURRENT_USER?Variable not set}
     develop:
       watch:
         - action: sync

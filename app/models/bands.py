@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 from sqlalchemy.sql import func
 from sqlmodel import DateTime, Field, Relationship, SQLModel
 
-from .relationship_linkers import BandSupportGigLink
+# from .relationship_linkers import BandSupportGigLink
 from .traits.core import DateTimeMixin
 from .traits.tenants import TenantMixin
 
@@ -28,10 +28,10 @@ class Band(DateTimeMixin, TenantMixin, BandBase, table=True):
         nullable=False,
     )
 
-    headline_gigs: list["Gig"] = Relationship(back_populates="primary_band")
-    support_gigs: list["Gig"] = Relationship(
-        back_populates="support_bands", link_model=BandSupportGigLink
-    )
+    # headline_gigs: list["Gig"] = Relationship(back_populates="primary_band")
+    # support_gigs: list["Gig"] = Relationship(
+    #     back_populates="support_bands", link_model=BandSupportGigLink
+    # )
 
 
 class BandCreate(BandBase):
