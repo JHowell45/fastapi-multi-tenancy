@@ -15,8 +15,8 @@ class Gig(TenantMixin, table=True):
     id: int | None = Field(default=None, primary_key=True)
 
     primary_band_id: int = Field(foreign_key="bands.id")
-    primary_band: Band = Relationship(back_populates="headline_gigs")
+    primary_band: "Band" = Relationship(back_populates="headline_gigs")
 
-    support_bands: list[Band] = Relationship(
+    support_bands: list["Band"] = Relationship(
         back_populates="support_gigs", link_model=BandSupportGigLink
     )

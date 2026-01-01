@@ -29,7 +29,9 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 ENV PYTHONPATH=/app
 
-COPY ./pyproject.toml ./uv.lock /app/
+COPY ./migrations app/
+
+COPY ./pyproject.toml ./uv.lock alembic.ini /app/
 
 RUN mkdir /logs
 

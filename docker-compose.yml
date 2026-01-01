@@ -1,46 +1,50 @@
 services:
-    app:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        restart: always
-        command: "python app/main.py"
-        env_file:
-            - .env
-        ports:
-            - "80:80"
-        develop:
-            watch:
-                - action: sync
-                  path: ./app
-                  target: /app/app
-                - action: sync+restart
-                  path: ./uv.lock
-                  target: /app/uv.lock
-    db:
-        image: postgres
-        restart: always
-        shm_size: 256mb
-        healthcheck:
-            test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
-            interval: 10s
-            retries: 5
-            start_period: 30s
-            timeout: 10s
-        volumes:
-            - fastapi-mt-data:/var/lib/postgresql/data/pgdata
-        env_file:
-            - .env
-        ports:
-            - "5432:5432"
-        environment:
-            - PGDATA=/var/lib/postgresql/data/pgdata
-            - POSTGRES_PASSWORD=${DB_PASSWORD?Variable not set}
-            - POSTGRES_USER=${DB_USER?Variable not set}
-            - POSTGRES_DB=${DB_NAME?Variable not set}
-        networks:
-            - fastapi-mt
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    command: "python app/main.py"
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+    develop:
+      watch:
+        - action: sync
+          path: ./app
+          target: /app/app
+        - action: sync+restart
+          path: ./uv.lock
+          target: /app/uv.lock
+    volumes:
+      - "./migrations:/app/migrations"
+    networks:
+      - fastapi-mt
+  db:
+    image: postgres
+    restart: always
+    shm_size: 256mb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    volumes:
+      - fastapi-mt-data:/var/lib/postgresql/data/pgdata
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD=${DB_PASSWORD?Variable not set}
+      - POSTGRES_USER=${DB_USER?Variable not set}
+      - POSTGRES_DB=${DB_NAME?Variable not set}
+    networks:
+      - fastapi-mt
 volumes:
-    fastapi-mt-data:
+  fastapi-mt-data:
 networks:
-    fastapi-mt:
+  fastapi-mt:

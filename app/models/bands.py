@@ -34,6 +34,16 @@ class Band(DateTimeMixin, TenantMixin, BandBase, table=True):
     )
 
 
+class BandCreate(BandBase):
+    started_at: datetime | None
+
+
+class BandUpdate(SQLModel):
+    name: str | None
+    description: str | None
+    started_at: datetime | None
+
+
 class BandNoGigPublic(BandBase):
     id: int
     started_at: datetime
