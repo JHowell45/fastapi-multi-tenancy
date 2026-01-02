@@ -35,7 +35,9 @@ def upgrade(
     command.upgrade(get_alembic_config(schema), revision=rev)
 
 
-@cli.command()
+@cli.command(
+    help="Lets you downgrade to an earlier migration version for the given schema type."
+)
 def downgrade(
     schema: Annotated[SchemaType, typer.Argument()],
     rev: Annotated[str, typer.Argument(help="Revision version to downgrade to.")],
