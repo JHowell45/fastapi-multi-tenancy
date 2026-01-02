@@ -21,8 +21,13 @@ def get_alembic_config(schema: SchemaType, cmd_opts: list[str] | None = None) ->
 
 @cli.command(help="Create a new migration for the called schema.")
 def revision(
-    schema: Annotated[SchemaType, typer.Argument()],
-    msg: Annotated[str, typer.Argument()],
+    schema: Annotated[
+        SchemaType,
+        typer.Argument(help="which schema type to create a migration revision for."),
+    ],
+    msg: Annotated[
+        str, typer.Argument("The message to give to the new migration revision.")
+    ],
 ) -> None:
     command.revision(get_alembic_config(schema), msg, autogenerate=True)
 
