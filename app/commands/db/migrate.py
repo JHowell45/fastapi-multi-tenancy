@@ -1,0 +1,39 @@
+from enum import StrEnum, auto
+from typing import Annotated
+
+import typer
+from alembic import command
+
+cli = typer.Typer(no_args_is_help=True)
+
+
+class SchemaType(StrEnum):
+    CORE = auto()
+    TENANTS = auto()
+
+
+def get_alembic_config(schema: SchemaType) -> Config: ...
+
+
+@cli.command(help="Create a new migration for the called schema.")
+def revision(
+    schema: Annotated[SchemaType, typer.Argument()],
+    msg: Annotated[str, typer.Argument()],
+) -> None:
+    command.revision(get_alembic_config(schema), msg, autogenerate=True)
+
+
+@cli.command(help="runs all of the newest migrations for the given schema type.")
+def upgrade(
+    schema: Annotated[SchemaType, typer.Argument()],
+    rev: Annotated[str, typer.Option(help="Revision version to upgrade to.")] = "heads",
+) -> None:
+    command.upgrade(get_alembic_config(schema), revision=rev)
+
+
+@cli.command()
+def downgrade(
+    schema: Annotated[SchemaType, typer.Argument()],
+    rev: Annotated[str, typer.Argument(help="Revision version to downgrade to.")],
+) -> None:
+    command.downgrade(get_alembic_config(schema), revision=rev)
