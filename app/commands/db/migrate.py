@@ -15,7 +15,8 @@ class SchemaType(StrEnum):
 
 
 def get_alembic_config(schema: SchemaType, cmd_opts: list[str] | None = None) -> Config:
-    file: Path = Path("../../../alembic.ini")
+    file: Path = Path("/app/alembic.ini")
+    print(file.resolve())
     return Config(file.resolve(), ini_section=schema.value, cmd_opts=cmd_opts)
 
 

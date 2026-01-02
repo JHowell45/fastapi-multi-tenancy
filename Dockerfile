@@ -31,7 +31,7 @@ ENV PYTHONPATH=/app
 
 COPY ./migrations app/
 
-COPY ./pyproject.toml ./uv.lock alembic.ini /app/
+COPY ./pyproject.toml ./uv.lock ./alembic.ini /app/
 
 RUN mkdir /logs
 
