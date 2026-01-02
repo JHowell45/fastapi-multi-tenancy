@@ -26,7 +26,7 @@ def revision(
         typer.Argument(help="which schema type to create a migration revision for."),
     ],
     msg: Annotated[
-        str, typer.Argument("The message to give to the new migration revision.")
+        str, typer.Argument(help="The message to give to the new migration revision.")
     ],
 ) -> None:
     command.revision(get_alembic_config(schema), msg, autogenerate=True)
