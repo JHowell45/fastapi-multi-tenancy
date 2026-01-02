@@ -4,7 +4,7 @@ from typing import Annotated
 
 import typer
 from alembic import command
-from alembic.runtime.migration import Config
+from alembic.config import Config
 
 cli = typer.Typer(no_args_is_help=True)
 
