@@ -19,7 +19,7 @@ def get_alembic_config(schema: SchemaType, cmd_opts: list[str] | None = None) ->
     return Config(file.resolve(), ini_section=schema.value, cmd_opts=cmd_opts)
 
 
-@cli.command(help="Create a new migration for the called schema.")
+@cli.command(help="Create a new migration for the called schema.", no_args_is_help=True)
 def revision(
     schema: Annotated[
         SchemaType,
@@ -32,7 +32,10 @@ def revision(
     command.revision(get_alembic_config(schema), msg, autogenerate=True)
 
 
-@cli.command(help="runs all of the newest migrations for the given schema type.")
+@cli.command(
+    help="runs all of the newest migrations for the given schema type.",
+    no_args_is_help=True,
+)
 def upgrade(
     schema: Annotated[SchemaType, typer.Argument()],
     rev: Annotated[str, typer.Option(help="Revision version to upgrade to.")] = "heads",
@@ -41,7 +44,8 @@ def upgrade(
 
 
 @cli.command(
-    help="Lets you downgrade to an earlier migration version for the given schema type."
+    help="Lets you downgrade to an earlier migration version for the given schema type.",
+    no_args_is_help=True,
 )
 def downgrade(
     schema: Annotated[SchemaType, typer.Argument()],
