@@ -5,7 +5,9 @@ from sqlalchemy import engine_from_config, pool
 from sqlmodel import SQLModel
 
 from app.deps.config import Settings, get_settings
-from app.models import bands, gigs  # noqa
+
+# from app.models import bands, gigs  # noqa
+from app.models.tenants import Tenant  # noqa
 
 settings: Settings = get_settings()
 
