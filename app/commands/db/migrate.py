@@ -1,8 +1,10 @@
 from enum import StrEnum, auto
+from pathlib import Path
 from typing import Annotated
 
 import typer
 from alembic import command
+from alembic.runtime.migration import Config
 
 cli = typer.Typer(no_args_is_help=True)
 
@@ -12,7 +14,9 @@ class SchemaType(StrEnum):
     TENANTS = auto()
 
 
-def get_alembic_config(schema: SchemaType) -> Config: ...
+def get_alembic_config(schema: SchemaType, cmd_opts: list[str] | None = None) -> Config:
+    file: Path = Path("../../../alembic.ini")
+    return Config(file.resolve(), ini_section=schema.value, cmd_opts=cmd_opts)
 
 
 @cli.command(help="Create a new migration for the called schema.")
